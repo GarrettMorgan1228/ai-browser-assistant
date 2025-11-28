@@ -113,7 +113,7 @@ body {
     display: inline-block;
     word-wrap: break-word;     /* Old syntax: forces word break */
     overflow-wrap: break-word; /* Modern syntax */
-    white-space: normal;
+    white-space: pre-line;  /* Preserve line breaks */
 }
 
 .bot-message {

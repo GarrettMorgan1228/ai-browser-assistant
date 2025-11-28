@@ -52,10 +52,10 @@ export default function Chatbox() {
     typeTimerRef.current = window.setInterval(() => {
         // bail if stopped or superseded
         if (cancelledRef.current || runId !== runIdRef.current) {
-        if (typeTimerRef.current) clearInterval(typeTimerRef.current);
-        typeTimerRef.current = null;
-        setTyping(false);
-        return;
+          if (typeTimerRef.current) clearInterval(typeTimerRef.current);
+          typeTimerRef.current = null;
+          setTyping(false);
+          return;
         }
         i++;
         setMessages(prev => {

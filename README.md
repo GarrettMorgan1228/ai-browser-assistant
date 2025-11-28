@@ -7,6 +7,7 @@ git clone <your-repo-url>
 cd extension
 npm install
 npm run dev
+```
 
 ## Load in Chrome
 - Open `chrome://extensions`

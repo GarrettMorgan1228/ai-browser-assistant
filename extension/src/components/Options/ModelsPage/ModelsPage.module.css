@@ -1,0 +1,135 @@
+* {
+    font-family: 'Inter', sans-serif;
+}
+
+.models-container, .models-settings-container {
+    display: flex;
+    flex-direction: column;
+    padding: 16px;
+    gap: 1rem;
+    /*border: 1px solid red;*/
+}
+
+.model-settings-container {
+    margin-top: 1rem;
+}
+
+.title {
+    margin: 0;
+    font-size: 1.4rem;
+    font-weight: 650;
+}
+
+.model-card {
+    border-bottom: 1px solid #475569;
+}
+
+.save, .delete {
+    padding: 4px 10px;
+    border-radius: 0.375rem;
+    font-size: 12;
+    font-weight: 500;
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s ease-in-out;
+}
+
+.save {
+    background-color: #3b82f6;
+    color: white;
+    margin-right: 8px;
+}
+
+.save:disabled {
+    background-color: #93c5fd; /* blue-300 */
+    cursor: not-allowed;
+}
+
+.delete {
+    background-color: #ef4444; /* red-500 */
+    color: white;
+}   
+
+.models-item, .api-key-details, .models {
+    display: flex;
+    justify-content: space-between;
+    align-items: center; 
+}
+
+.api-key-details, .models {
+    gap: 1rem;
+}
+
+.models {
+    align-items: flex-start;
+}
+
+.models-list {
+    display: flex;
+    flex-direction: column;
+    margin-left: 3px;
+}
+
+.api-key-details input, .models-list {
+    flex: 1;
+}
+
+.api-key-details input {
+    padding: 8px;
+    border-radius: 8px;
+    font-size: 14px;
+}
+
+.api-key-details input, .api-key-details input::placeholder {
+    color: #019863;
+}
+
+.api-key-details input {
+    border: 1px solid #019863;
+}
+
+.not-configured {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+
+    color: #9ca3af; /* gray-400 */
+    font-style: italic;
+
+    padding: 3rem 0rem;
+}
+
+.planner {
+    padding: 1rem;
+    border: 1px solid #475569; /* gray-600 */
+    border-radius: 8px;
+}
+
+.planner h3 {
+    margin: 0;
+    font-size: 1rem;
+}
+
+.planner p {
+    margin: 0.5rem 0rem;
+    color: #9ca3af; /* gray-400 */
+    font-size: 14px;
+}
+
+.model-settings-item {
+  display: flex;
+  align-items: center;
+  margin: 1rem 0;
+}
+
+.model-settings label {
+  display: inline-block;
+  width: 120px;   /* adjust so all labels have same block width */
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.model-settings-wrapper {
+  flex: 1;        /* this makes the child component fill the rest */
+}

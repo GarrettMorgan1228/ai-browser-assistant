@@ -1,0 +1,15 @@
+.root {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
+}
+
+.range {
+  flex: 1;       /* slider expands */
+  min-width: 0;  /* prevents flex overflow issues */
+}
+
+.number {
+  width: 70px;   /* fixed width for numeric input */
+}

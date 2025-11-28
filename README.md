@@ -1,4 +1,4 @@
-# Agentic Browser — Chrome Extension Setup
+# Agentic Browser - Chrome Extension Setup
 
 ## Install
 

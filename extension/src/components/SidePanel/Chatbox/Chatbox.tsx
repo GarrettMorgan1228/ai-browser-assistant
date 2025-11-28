@@ -1,6 +1,7 @@
 import { useRef, useState, useEffect } from "react";
 import styles from "./Chatbox.module.css";
 import { chatOnce, type Msg } from '../../../llm/gemini'
+import { extractPageText, getActiveTabId, buildSummaryPrompt } from '../../../llm/utils/ExtractText';
 
 // Simple chatbox interface with message history, input area, and send/stop buttons
 function LoadingBubble() {
@@ -70,16 +71,19 @@ export default function Chatbox() {
         setTyping(false);
         }
     }, speedMs)
-}
+  }
 
   // send current input to model and handle response
-  async function send() {
-    const text = input.trim();
+  async function send(customText?: string) {
+    const text = (customText ?? input).trim();
     if (!text || loading || typing) return;
 
     const nextMsgs = [...messages, { role: "user", content: text } as Msg];
     setMessages(nextMsgs);
-    setInput("");
+
+    // Only clear the box if we're sending from the textarea
+    if (!customText) setInput("");
+
 
     // start a new run
     const myRun = ++runIdRef.current;
@@ -101,7 +105,29 @@ export default function Chatbox() {
     } finally {
         if (myRun === runIdRef.current) abortRef.current = null;
     }
-}
+  }
+
+  // send a summary prompt
+  async function sendSummary() {
+    if (loading || typing) return;
+
+    // Grab text from webpage to summarize
+    const tabId = await getActiveTabId();
+    const pageText = await extractPageText(tabId, 12000); // DEFAULT MAX CHARS: 12000
+
+    // Build the summary prompt
+    const summaryPrompt = buildSummaryPrompt(pageText);
+
+    // Show the prompt in the textarea
+    setInput(summaryPrompt);
+
+    // Important: schedule send after state updates
+    setTimeout(() => {
+      send(summaryPrompt);
+      setInput("");
+    }, 0);
+  }
+
   // stop current request or typing
   function stop() {
     cancelledRef.current = true;
@@ -113,7 +139,7 @@ export default function Chatbox() {
     }
     setLoading(false);
     setTyping(false);
-}
+  }
 
   function clearChat() {
     stop();
@@ -143,15 +169,19 @@ export default function Chatbox() {
       </div>
 
       <div className={styles["input-container"]}>
-        <textarea
-          className={styles["message-input"]}
-          placeholder="Ask anything..."
-          value={input}
-          onChange={e => setInput(e.target.value)}
-          onKeyDown={e => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); send(); } }}
-        />
-        <button className={styles["send-btn"]} onClick={send} disabled={!input.trim() || loading || typing}>⬆️</button>
-        <button className={styles["stop-btn"]} onClick={stop} disabled={!loading && !typing}>🟥</button>
+        <>
+          <textarea
+            className={styles["message-input"]}
+            placeholder="Ask anything..."
+            value={input}
+            onChange={e => setInput(e.target.value)}
+            onKeyDown={e => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); send(); } }}
+          />
+          <button className={styles["send-btn"]} onClick={() => send()} disabled={!input.trim() || loading || typing}>⬆️</button>
+          <button className={styles["stop-btn"]} onClick={stop} disabled={!loading && !typing}>🟥</button>
+        </>
+        {/* Summarize button here */}
+        <button onClick={sendSummary} disabled={loading || typing}>Summarize</button>
       </div>
     </div>
   );

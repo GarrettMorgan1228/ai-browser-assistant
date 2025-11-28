@@ -25,9 +25,7 @@ export default defineConfig({
         
         // Entry point for the extension's background script
         // This runs as a service worker in the background
-        background: resolve(__dirname, 'src/background.ts'),
-        // content script entry
-        content: resolve(__dirname, 'src/content/content.tsx'),
+        background: resolve(__dirname, 'src/background.ts')
       },
       
       // Configure how the output files are named
@@ -45,11 +43,6 @@ export default defineConfig({
 
         // Manual chunking strategy to optimize bundle sizes
         manualChunks(id) {
-          // If the chunk belongs to the 'content' script (e.g., node_modules/react), 
-          // we must return 'content' to force it into the content.js bundle.
-          if (id.includes(resolve(__dirname, 'src/content'))) {
-              return 'content';
-          }
 
           // Separate vendor libraries into their own chunks
           if (id.includes("node_modules")) {

@@ -118,25 +118,68 @@ export default function Chatbox() {
     }
   }
 
+  async function sendHiddenPrompt(displayText: string, promptText: string) {
+    if (loading || typing) return;
+
+    setMessages((prev) => [
+      ...prev,
+      { role: "user", content: displayText } as Msg,
+    ]);
+
+    const myRun = ++runIdRef.current;
+    cancelledRef.current = false;
+
+    setLoading(true);
+    abortRef.current = new AbortController();
+
+    try {
+      // IMPORTANT: model gets promptText, but UI shows displayText
+      const modelMsgs = [
+        ...messages,
+        { role: "user", content: promptText } as Msg,
+      ];
+      const reply = await chatOnce(modelMsgs, abortRef.current.signal);
+
+      if (cancelledRef.current || myRun !== runIdRef.current) return;
+      setLoading(false);
+      typewrite(reply, 12, myRun);
+    } catch {
+      if (!cancelledRef.current) {
+        setLoading(false);
+        setMessages((prev) => [
+          ...prev,
+          { role: "assistant", content: "Error calling model." },
+        ]);
+      }
+    } finally {
+      if (myRun === runIdRef.current) abortRef.current = null;
+    }
+  }
+
   // send a summary prompt
   async function sendSummary() {
     if (loading || typing) return;
 
-    // Grab text from webpage to summarize
-    const tabId = await getActiveTabId();
-    const pageText = await extractPageText(tabId, 12000); // DEFAULT MAX CHARS: 12000
+    try {
+      const tabId = await getActiveTabId();
+      const pageText = await extractPageText(tabId, 12000);
+      const summaryPrompt = buildSummaryPrompt(pageText);
 
-    // Build the summary prompt
-    const summaryPrompt = buildSummaryPrompt(pageText);
-
-    // Show the prompt in the textarea
-    setInput(summaryPrompt);
-
-    // Important: schedule send after state updates
-    setTimeout(() => {
-      send(summaryPrompt);
-      setInput("");
-    }, 0);
+      await sendHiddenPrompt(
+        "Summarize the current page, please.",
+        summaryPrompt
+      );
+    } catch (e: any) {
+      setMessages((prev) => [
+        ...prev,
+        {
+          role: "assistant",
+          content:
+            "Could not read this page. If this is a restricted page or missing permissions, try another site.\n\n" +
+            String(e?.message ?? e),
+        },
+      ]);
+    }
   }
 
   // stop current request or typing

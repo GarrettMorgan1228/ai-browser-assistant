@@ -37,12 +37,16 @@
   box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1); /* shadow-lg */
   z-index: 10;
   min-width: 200px;
-  max-height: 250px;   /* adjust as needed */
-  overflow-y: auto;    /* makes it scrollable */
+  max-height: 250px; /* adjust as needed */
+  overflow-y: auto; /* makes it scrollable */
 }
 
-.dropdownBottom { top: calc(100% + 4px); }
-.dropdownTop    { bottom: calc(100% + 4px); }
+.dropdownBottom {
+  top: calc(100% + 4px);
+}
+.dropdownTop {
+  bottom: calc(100% + 4px);
+}
 
 .dropdownItem {
   width: 100%;

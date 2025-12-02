@@ -7,154 +7,158 @@
 
 /*change background color, add custom icons?*/
 
-
 body {
-    font-family: 'Inter', 'sans-serif';
-    margin: 0;
-    padding: 0;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
+  font-family: "Inter", "sans-serif";
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 .title {
-    font-size: 14px;
+  font-size: 14px;
 }
 
 /*Use textarea in html and js to make it dynamically grow*/
 .input-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 10px 10px 15px 10px;
-    background-color: #fff;
-    border-top: 1px solid #ccc;
-    position: sticky;
-    bottom: 0;
-    z-index: 1;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 10px 15px 10px;
+  background-color: #fff;
+  border-top: 1px solid #ccc;
+  position: sticky;
+  bottom: 0;
+  z-index: 1;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
 }
 
 .chatbox-wrapper {
-    display: flex;
-    flex-direction: column;
-    height: 100vh; /* Full viewport height */
+  display: flex;
+  flex-direction: column;
+  height: 100vh; /* Full viewport height */
 }
 
-.message-input, .send-button {
-    border-radius: 4px;
+.message-input,
+.send-button {
+  border-radius: 4px;
 }
 
 .message-input {
-    flex: 1;
-    font-family: 'Inter', 'sans-serif';
-    padding: 10px 10px 20px 10px;
-    border: 1px solid #ccc;
-    margin-right: 5px;
-    resize: vertical;
+  flex: 1;
+  font-family: "Inter", "sans-serif";
+  padding: 10px 10px 20px 10px;
+  border: 1px solid #ccc;
+  margin-right: 5px;
+  resize: vertical;
 }
 
 /*Change this with an icon*/
-.send-btn, .stop-btn {
-    padding: 10px;
-    background-color: #4285f4;
-    color: white;
-    border-radius: 50%;
-    border: none;
-    cursor: pointer;
+.send-btn,
+.stop-btn {
+  padding: 10px;
+  background-color: #4285f4;
+  color: white;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
 }
 
 /*.stop-btn { display: inline-flex; align-items:center; justify-content:center; width:36px; height:36px; }*/
-.stop-btn:disabled, .send-btn:disabled{ display: none; }
-
+.stop-btn:disabled,
+.send-btn:disabled {
+  display: none;
+}
 
 .chat-container {
-    flex: 1;
-    overflow-y: auto;
-    padding: 10px;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: start;
-    background-color: #fff;
-    margin-bottom: 0;
-    gap: 10px;
-    font-size: 14px;
+  flex: 1;
+  overflow-y: auto;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: start;
+  background-color: #fff;
+  margin-bottom: 0;
+  gap: 10px;
+  font-size: 14px;
 }
 
 .toolbar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 15px;
-    background-color: #f0f0f0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px;
+  background-color: #f0f0f0;
 }
 
 .toolbar-buttons {
-    display: flex;
-    gap: 5px;
+  display: flex;
+  gap: 5px;
 }
 
-.toolbar-button, .settings-button {
-    background: none;
-    border: none;
-    font-size: 18px;
-    cursor: pointer;
+.toolbar-button,
+.settings-button {
+  background: none;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
 }
 
 /* Chat bubbles */
 
 .bubble {
-    max-width: 70%;
-    padding: 1em 1.5em;
-    border-radius: 25px;
-    background: #4285f4;
-    color: #fff;
-    display: inline-block;
-    word-wrap: break-word;     /* Old syntax: forces word break */
-    overflow-wrap: break-word; /* Modern syntax */
-    white-space: pre-line;  /* Preserve line breaks */
+  max-width: 70%;
+  padding: 1em 1.5em;
+  border-radius: 25px;
+  background: #4285f4;
+  color: #fff;
+  display: inline-block;
+  word-wrap: break-word; /* Old syntax: forces word break */
+  overflow-wrap: break-word; /* Modern syntax */
+  white-space: pre-line; /* Preserve line breaks */
 }
 
 .bot-message {
-    --_p: 0;
-    place-self: start;
+  --_p: 0;
+  place-self: start;
 }
 
 .user-message {
-    --_p: 100%;
-    place-self: end;
+  --_p: 100%;
+  place-self: end;
 }
 
 /* Loading bubble animation */
 .line {
-    display: inline-block;
-    width: 10px;
-    height: 10px;
-    margin: 0 3px;
-    border-radius: 10px;
-    background-color: #fafafa;
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  margin: 0 3px;
+  border-radius: 10px;
+  background-color: #fafafa;
 }
 
 .loading .line:nth-last-child(1) {
-    animation: loadingB 1.5s 1s infinite;
+  animation: loadingB 1.5s 1s infinite;
 }
 .loading .line:nth-last-child(2) {
-    animation: loadingB 1.5s 0.5s infinite;
+  animation: loadingB 1.5s 0.5s infinite;
 }
 .loading .line:nth-last-child(3) {
-    animation: loadingB 1.5s 0s infinite;
+  animation: loadingB 1.5s 0s infinite;
 }
 
 @keyframes loadingB {
-    0% {
-        width: 10px;
-    }
-    50% {
-        width: 30px;
-    }
-    100% {
-        width: 10px;
-    }
+  0% {
+    width: 10px;
+  }
+  50% {
+    width: 30px;
+  }
+  100% {
+    width: 10px;
+  }
 }
 /* Loading bubble animation */

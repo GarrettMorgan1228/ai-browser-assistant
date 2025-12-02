@@ -3,12 +3,16 @@ import styles from "./SliderWithInput.module.css";
 
 type Props = {
   Max: number;
-  storageKey: string;        // e.g., "temperature" or "topP"
-  defaultValue?: number;     // fallback if nothing in storage
+  storageKey: string; // e.g., "temperature" or "topP"
+  defaultValue?: number; // fallback if nothing in storage
 };
 
 // Slider with synchronized range and number inputs, persisting to chrome.storage
-export default function SliderWithInput({ Max, storageKey, defaultValue = 0 }: Props) {
+export default function SliderWithInput({
+  Max,
+  storageKey,
+  defaultValue = 0,
+}: Props) {
   const [value, setValue] = useState<number>(defaultValue);
 
   // load once

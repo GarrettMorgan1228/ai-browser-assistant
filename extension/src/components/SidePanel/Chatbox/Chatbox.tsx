@@ -1,7 +1,11 @@
 import { useRef, useState, useEffect } from "react";
 import styles from "./Chatbox.module.css";
-import { chatOnce, type Msg } from '../../../llm/gemini'
-import { extractPageText, getActiveTabId, buildSummaryPrompt } from '../../../llm/utils/ExtractText';
+import { chatOnce, type Msg } from "../../../llm/gemini";
+import {
+  extractPageText,
+  getActiveTabId,
+  buildSummaryPrompt,
+} from "../../../llm/utils/ExtractText";
 
 // Simple chatbox interface with message history, input area, and send/stop buttons
 function LoadingBubble() {
@@ -18,12 +22,16 @@ function LoadingBubble() {
 
 // Single message bubble, styled based on role (user or assistant)
 function Bubble({ m, showCursor }: { m: Msg; showCursor?: boolean }) {
-  const cls = m.role === "assistant"
-    ? `${styles.bubble} ${styles["bot-message"]}`
-    : `${styles.bubble} ${styles["user-message"]}`;
+  const cls =
+    m.role === "assistant"
+      ? `${styles.bubble} ${styles["bot-message"]}`
+      : `${styles.bubble} ${styles["user-message"]}`;
   return (
     <div className={cls}>
-      <span>{m.content}{showCursor && <span className={styles.cursor}></span>}</span>
+      <span>
+        {m.content}
+        {showCursor && <span className={styles.cursor}></span>}
+      </span>
     </div>
   );
 }
@@ -41,36 +49,37 @@ export default function Chatbox() {
   const cancelledRef = useRef(false);
 
   // scroll to bottom on new messages, loading, or typing
-  useEffect(() => { bottomRef.current?.scrollIntoView({ behavior: "smooth" }); },
-            [messages, loading, typing]);
+  useEffect(() => {
+    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages, loading, typing]);
 
   // add run id to typewrite
   function typewrite(text: string, speedMs = 12, runId = runIdRef.current) {
     setTyping(true);
-    setMessages(prev => [...prev, { role: "assistant", content: "" }]);
+    setMessages((prev) => [...prev, { role: "assistant", content: "" }]);
     let i = 0;
     typeTimerRef.current = window.setInterval(() => {
-        // bail if stopped or superseded
-        if (cancelledRef.current || runId !== runIdRef.current) {
-          if (typeTimerRef.current) clearInterval(typeTimerRef.current);
-          typeTimerRef.current = null;
-          setTyping(false);
-          return;
-        }
-        i++;
-        setMessages(prev => {
+      // bail if stopped or superseded
+      if (cancelledRef.current || runId !== runIdRef.current) {
+        if (typeTimerRef.current) clearInterval(typeTimerRef.current);
+        typeTimerRef.current = null;
+        setTyping(false);
+        return;
+      }
+      i++;
+      setMessages((prev) => {
         const next = prev.slice();
         const last = next[next.length - 1];
         if (!last || last.role !== "assistant") return prev;
         next[next.length - 1] = { ...last, content: text.slice(0, i) };
         return next;
-        });
-        if (i >= text.length) {
+      });
+      if (i >= text.length) {
         if (typeTimerRef.current) clearInterval(typeTimerRef.current);
         typeTimerRef.current = null;
         setTyping(false);
-        }
-    }, speedMs)
+      }
+    }, speedMs);
   }
 
   // send current input to model and handle response
@@ -84,7 +93,6 @@ export default function Chatbox() {
     // Only clear the box if we're sending from the textarea
     if (!customText) setInput("");
 
-
     // start a new run
     const myRun = ++runIdRef.current;
     cancelledRef.current = false;
@@ -92,18 +100,21 @@ export default function Chatbox() {
     setLoading(true);
     abortRef.current = new AbortController();
     try {
-        const reply = await chatOnce(nextMsgs, abortRef.current.signal);
-        // ignore late/aborted results
-        if (cancelledRef.current || myRun !== runIdRef.current) return;
-        setLoading(false);
-        typewrite(reply, 12, myRun);
+      const reply = await chatOnce(nextMsgs, abortRef.current.signal);
+      // ignore late/aborted results
+      if (cancelledRef.current || myRun !== runIdRef.current) return;
+      setLoading(false);
+      typewrite(reply, 12, myRun);
     } catch {
-        if (!cancelledRef.current) {
+      if (!cancelledRef.current) {
         setLoading(false);
-        setMessages(prev => [...prev, { role: "assistant", content: "Error calling model." }]);
-        }
+        setMessages((prev) => [
+          ...prev,
+          { role: "assistant", content: "Error calling model." },
+        ]);
+      }
     } finally {
-        if (myRun === runIdRef.current) abortRef.current = null;
+      if (myRun === runIdRef.current) abortRef.current = null;
     }
   }
 
@@ -134,8 +145,8 @@ export default function Chatbox() {
     abortRef.current?.abort();
     abortRef.current = null;
     if (typeTimerRef.current) {
-        clearInterval(typeTimerRef.current);
-        typeTimerRef.current = null;
+      clearInterval(typeTimerRef.current);
+      typeTimerRef.current = null;
     }
     setLoading(false);
     setTyping(false);
@@ -149,10 +160,24 @@ export default function Chatbox() {
   return (
     <div className={styles["chatbox-wrapper"]}>
       <div className={styles.toolbar}>
-        <div className={styles.title}><span></span></div>
+        <div className={styles.title}>
+          <span></span>
+        </div>
         <div className={styles["toolbar-buttons"]}>
-          <button className={styles["toolbar-button"]} title="Clear Chat" onClick={clearChat}>🗑️</button>
-          <button className={styles["settings-button"]} title="Settings" onClick={() => chrome.runtime.openOptionsPage()}>⚙️</button>
+          <button
+            className={styles["toolbar-button"]}
+            title="Clear Chat"
+            onClick={clearChat}
+          >
+            🗑️
+          </button>
+          <button
+            className={styles["settings-button"]}
+            title="Settings"
+            onClick={() => chrome.runtime.openOptionsPage()}
+          >
+            ⚙️
+          </button>
         </div>
       </div>
 
@@ -161,7 +186,9 @@ export default function Chatbox() {
           <Bubble
             key={i}
             m={m}
-            showCursor={typing && i === messages.length - 1 && m.role === "assistant"}
+            showCursor={
+              typing && i === messages.length - 1 && m.role === "assistant"
+            }
           />
         ))}
         {loading && <LoadingBubble />}
@@ -174,14 +201,33 @@ export default function Chatbox() {
             className={styles["message-input"]}
             placeholder="Ask anything..."
             value={input}
-            onChange={e => setInput(e.target.value)}
-            onKeyDown={e => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); send(); } }}
+            onChange={(e) => setInput(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" && !e.shiftKey) {
+                e.preventDefault();
+                send();
+              }
+            }}
           />
-          <button className={styles["send-btn"]} onClick={() => send()} disabled={!input.trim() || loading || typing}>⬆️</button>
-          <button className={styles["stop-btn"]} onClick={stop} disabled={!loading && !typing}>🟥</button>
+          <button
+            className={styles["send-btn"]}
+            onClick={() => send()}
+            disabled={!input.trim() || loading || typing}
+          >
+            ⬆️
+          </button>
+          <button
+            className={styles["stop-btn"]}
+            onClick={stop}
+            disabled={!loading && !typing}
+          >
+            🟥
+          </button>
         </>
         {/* Summarize button here */}
-        <button onClick={sendSummary} disabled={loading || typing}>Summarize</button>
+        <button onClick={sendSummary} disabled={loading || typing}>
+          Summarize
+        </button>
       </div>
     </div>
   );

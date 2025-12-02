@@ -6,10 +6,10 @@
 }
 
 .range {
-  flex: 1;       /* slider expands */
-  min-width: 0;  /* prevents flex overflow issues */
+  flex: 1; /* slider expands */
+  min-width: 0; /* prevents flex overflow issues */
 }
 
 .number {
-  width: 70px;   /* fixed width for numeric input */
+  width: 70px; /* fixed width for numeric input */
 }

@@ -1,4 +1,3 @@
-
 // Get the active tab ID
 export async function getActiveTabId(): Promise<number> {
   const tabs = await chrome.tabs.query({ active: true, currentWindow: true });
@@ -8,15 +7,19 @@ export async function getActiveTabId(): Promise<number> {
 }
 
 // Extract readable text from the page
-export async function extractPageText(tabId: number, maxChars: number): Promise<string> {
+export async function extractPageText(
+  tabId: number,
+  maxChars: number
+): Promise<string> {
   const injection = await chrome.scripting.executeScript({
     target: { tabId },
     func: (cap: number) => {
       // Helper to collapse whitespace and cap length
-      const collapse = (s: string) => s.replace(/\s+/g, " ").trim().slice(0, cap);
+      const collapse = (s: string) =>
+        s.replace(/\s+/g, " ").trim().slice(0, cap);
 
       // Try to get user selection first
-      const selection = window.getSelection?.()?.toString()?.trim() ?? "";  
+      const selection = window.getSelection?.()?.toString()?.trim() ?? "";
       if (selection.length > 40) return collapse(selection);
 
       // Fallback to main content extraction

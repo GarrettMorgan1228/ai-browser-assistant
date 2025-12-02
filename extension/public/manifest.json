@@ -4,7 +4,7 @@
   "version": "1.1",
   "description": "ChatGPT, but for your browser.",
 
-  "permissions": ["storage", "sidePanel", "activeTab","tabs", "scripting"],
+  "permissions": ["storage", "sidePanel", "activeTab", "tabs", "scripting"],
   "host_permissions": ["<all_urls>"],
 
   "action": { "default_title": "Agentic Browser Extension" },
@@ -20,5 +20,4 @@
   },
 
   "side_panel": { "default_path": "sidepanel.html" }
-  
 }

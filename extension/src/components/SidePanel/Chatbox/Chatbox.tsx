@@ -204,7 +204,7 @@ export default function Chatbox() {
     <div className={styles["chatbox-wrapper"]}>
       <div className={styles.toolbar}>
         <div className={styles.title}>
-          <span></span>
+          <span>PAGE SUMMARY / Q&A</span>
         </div>
         <div className={styles["toolbar-buttons"]}>
           <button
@@ -242,7 +242,7 @@ export default function Chatbox() {
         <>
           <textarea
             className={styles["message-input"]}
-            placeholder="Ask anything..."
+            placeholder="Ask anything about the current page..."
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={(e) => {
@@ -257,19 +257,19 @@ export default function Chatbox() {
             onClick={() => send()}
             disabled={!input.trim() || loading || typing}
           >
-            ⬆️
+            ASK
           </button>
           <button
             className={styles["stop-btn"]}
             onClick={stop}
             disabled={!loading && !typing}
           >
-            🟥
+            STOP
           </button>
         </>
         {/* Summarize button here */}
-        <button onClick={sendSummary} disabled={loading || typing}>
-          Summarize
+        <button onClick={sendSummary} disabled={loading || typing} className={styles["summarize-btn"]}>
+          SUMMARIZE
         </button>
       </div>
     </div>

@@ -85,7 +85,7 @@ body {
   background-color: hsla(0, 0%, 100%, 0.1);
   font-family: "Inter", "sans-serif";
   color: hsla(0, 0%, 100%, 0.75);
-  padding: 10px 10px 50px 10px;
+  padding: 10px 10px 35px 10px;
   border: 1px solid hsl(0, 0%, 80%);
   margin-right: 5px;
   resize: block;
@@ -217,9 +217,21 @@ body {
 
 .bubble {
   max-width: 70%;
-  padding: 1em 1.5em;
-  border-radius: 25px;
-  background: #4285f4;
+  padding: 0.75em 1em;
+  border-radius: 12px;
+  border: 2px solid hsla(217, 91%, 60%, 0.35);
+  background: radial-gradient(
+      circle at top left,
+      hsl(217, 100%, 75%),      /* bright soft blue highlight */
+      transparent 55%
+    ),
+    radial-gradient(
+      circle at bottom right,
+      hsla(217, 90%, 65%, 0.45), /* subtle blue glow */
+      transparent 55%
+    ),
+    hsl(217, 85%, 55%);          /* main bubble blue */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
   color: #fff;
   display: inline-block;
   word-wrap: break-word; /* Old syntax: forces word break */

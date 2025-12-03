@@ -13,6 +13,7 @@
   background-color: transparent;
   font-weight: 600; /* font-medium */
   border: 1px solid #019863; /* border-blue-700 */
+  background-color: #ffffff; /* bg-white */
   color: #019863;
   transition: all 0.2s ease-in-out;
 }

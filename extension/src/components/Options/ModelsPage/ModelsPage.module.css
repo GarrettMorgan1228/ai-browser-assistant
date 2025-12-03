@@ -2,6 +2,21 @@
   font-family: "Inter", sans-serif;
 }
 
+
+body {
+  background: radial-gradient(
+      circle at top left,
+      hsla(214, 21%, 6%, 0.7),
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at bottom right,
+      hsla(218, 20%, 8%, 0.7),
+      transparent 75%
+    ),
+    hsla(231, 41%, 7%, 0.5);
+}
+
 .models-container,
 .models-settings-container {
   display: flex;
@@ -19,6 +34,7 @@
   margin: 0;
   font-size: 1.4rem;
   font-weight: 650;
+  color: #f1f5f9; /* text-slate-100 */
 }
 
 .model-card {
@@ -58,6 +74,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  color: #f1f5f9; /* text-slate-100 */
 }
 
 .api-key-details,
@@ -107,6 +124,7 @@
   padding: 3rem 0rem;
 }
 
+
 .planner {
   padding: 1rem;
   border: 1px solid #475569; /* gray-600 */
@@ -116,11 +134,13 @@
 .planner h3 {
   margin: 0;
   font-size: 1rem;
+  color: #f1f5f9; /* text-slate-100 */
 }
+
 
 .planner p {
   margin: 0.5rem 0rem;
-  color: #9ca3af; /* gray-400 */
+  color: #cbd5e1; /* text-slate-300 */
   font-size: 14px;
 }
 
@@ -135,6 +155,8 @@
   width: 120px; /* adjust so all labels have same block width */
   font-weight: 500;
   font-size: 14px;
+  color: #f1f5f9; /* text-slate-100 */
+
 }
 
 .model-settings-wrapper {

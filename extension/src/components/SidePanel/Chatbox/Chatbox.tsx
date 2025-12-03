@@ -239,7 +239,7 @@ export default function Chatbox() {
       </div>
 
       <div className={styles["input-container"]}>
-        <>
+        <div className={styles["input-row"]}>
           <textarea
             className={styles["message-input"]}
             placeholder="Ask anything about the current page..."
@@ -252,21 +252,13 @@ export default function Chatbox() {
               }
             }}
           />
-          <button
-            className={styles["send-btn"]}
-            onClick={() => send()}
-            disabled={!input.trim() || loading || typing}
-          >
+          <button className={styles["send-btn"]} onClick={() => send()} disabled={!input.trim() || loading || typing}>
             ASK
           </button>
-          <button
-            className={styles["stop-btn"]}
-            onClick={stop}
-            disabled={!loading && !typing}
-          >
+          <button className={styles["stop-btn"]} onClick={stop} disabled={!loading && !typing}>
             STOP
           </button>
-        </>
+        </div>
         {/* Summarize button here */}
         <button onClick={sendSummary} disabled={loading || typing} className={styles["summarize-btn"]}>
           SUMMARIZE

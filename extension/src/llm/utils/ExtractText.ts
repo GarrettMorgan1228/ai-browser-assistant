@@ -46,10 +46,11 @@ export async function extractPageText(
 // Build prompt for summarization
 export function buildSummaryPrompt(text: string): string {
   return [
-    "Summarize the following webpage content.",
+    "Build an easily digestible summary of the following webpage, make it easy to read for any user demographic.",
+    "Be funny or witty when possible.",
     "Return:",
     "1) A 1-sentence overview",
-    "2) 3-6 key bullet points",
+    "2) up to 3 key bullet points",
     "3) Any notable names/figures (if present)",
     "",
     "WEBPAGE CONTENT:",

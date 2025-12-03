@@ -4,7 +4,7 @@ import {
   AIMessage,
   SystemMessage,
 } from "@langchain/core/messages";
-import { BAD_BITCH_PERSONA, NOVA_PERSONA } from "./personas";
+import { BAD_BITCH_PERSONA, NOVA_PERSONA, GEN_Z_PERSONA } from "./personas";
 
 export type Msg = { role: "user" | "assistant"; content: string };
 
@@ -51,7 +51,7 @@ export async function buildModel() {
 export async function chatOnce(
   history: Msg[],
   signal?: AbortSignal,
-  persona: string = NOVA_PERSONA
+  persona: string = GEN_Z_PERSONA
 ): Promise<string> {
   const model = await buildModel();
 
